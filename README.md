@@ -1,9 +1,7 @@
 # El As del Barrio
 
 Trabajo final de Fundamentos Teoricos de la Informatica (UNPSJB, 2026).
-Blackjack modelado con un automata de flujo (AFD) y un automata de puntaje (AFND -> AFD -> Moore).
-Ampliacion con TP3 y TP4: un automata de pila que lleva el balance de la sesion (ganadas vs perdidas)
-y una maquina de Turing que compara los puntajes y decide si la mano se gana, se pierde o se empata.
+Blackjack modelado con un automata de flujo (AFD), un automata de puntaje (AFND -> AFD -> Moore), un automata de pila que lleva el balance de la sesion (ganadas vs perdidas) y una maquina de Turing que compara los puntajes y decide si la mano se gana, se pierde o se empata.
 
 Para jugar en el navegador: abrir `web/index.html` (doble clic, no hace falta instalar nada ni tener internet).
 
