@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>El As del Barrio</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="encabezado">
+      <div class="titulo">
+        <div class="logo">A<span>♠</span></div>
+        <div>
+          <h1>El As del Barrio</h1>
+          <p>Blackjack con autómatas · Fundamentos Teóricos de la Informática</p>
+        </div>
+      </div>
+      <div class="pills">
+        <div id="mano-display" class="pill">Mano 1</div>
+        <div id="balance-display" class="pill balance">Balance 0</div>
+      </div>
+    </header>
+
+    <main class="contenido">
+      <section class="juego">
+        <div class="mesa">
+          <div class="mazo" aria-hidden="true">
+            <div class="dorso"></div>
+            <div class="dorso"></div>
+            <div class="dorso"></div>
+          </div>
+
+          <div class="zona">
+            <div class="zona-titulo">Casa <span id="puntaje-casa" class="puntaje"></span></div>
+            <div id="cartas-casa" class="cartas"></div>
+          </div>
+
+          <div id="mensaje" class="mensaje">Apretá Repartir para empezar</div>
+
+          <div class="zona">
+            <div id="cartas-jugador" class="cartas"></div>
+            <div class="zona-titulo">Jugador <span id="puntaje-jugador" class="puntaje"></span></div>
+          </div>
+
+          <div class="regla">La casa pide con menos de 17 y se planta con 17 o más</div>
+        </div>
+
+        <div id="controls">
+          <button id="btn-repartir" class="boton repartir">Repartir <kbd>r</kbd></button>
+          <button id="btn-pedir" class="boton pedir">Pedir <kbd>p</kbd></button>
+          <button id="btn-plantarse" class="boton plantarse">Plantarse <kbd>s</kbd></button>
+        </div>
+        <p class="ayuda">Las teclas son los símbolos del alfabeto del autómata de flujo</p>
+      </section>
+
+      <aside class="panel">
+        <div class="tarjeta">
+          <h3>Flujo de la partida <small>AFD</small></h3>
+          <div id="estados-flujo" class="estados"></div>
+          <div class="cadena">Eventos <code id="cadena-flujo">λ</code></div>
+        </div>
+
+        <div class="tarjeta">
+          <h3>Puntaje de la mano <small>AFD + Moore</small></h3>
+          <div class="fila-moore">
+            <span class="quien">Jugador</span>
+            <span id="estado-jugador" class="chip-estado">D0</span>
+            <div id="salidas-jugador" class="salidas"></div>
+          </div>
+          <div class="fila-moore">
+            <span class="quien">Casa</span>
+            <span id="estado-casa" class="chip-estado">D0</span>
+            <div id="salidas-casa" class="salidas"></div>
+          </div>
+          <div class="leyenda">
+            <span class="salida-S">S segura</span><span class="salida-R">R riesgosa</span>
+            <span class="salida-A">A alta</span><span class="salida-V">V 21</span><span class="salida-P">P pasada</span>
+          </div>
+        </div>
+
+        <div class="tarjeta">
+          <h3>Resultado de la mano <small>Máquina de Turing</small></h3>
+          <div id="cinta" class="cinta"></div>
+          <div id="info-mt" class="info-mt">Compara jugador#casa en unario cuando nadie se pasó</div>
+        </div>
+
+        <div class="tarjeta">
+          <h3>Balance de la sesión <small>Autómata de pila</small></h3>
+          <div class="pila-contenedor">
+            <div id="pila" class="pila"></div>
+            <div class="pila-info">
+              <p><b class="g">G</b> mano ganada de más</p>
+              <p><b class="p">P</b> mano perdida de más</p>
+              <p><b class="z">Z</b> fondo de la pila</p>
+              <p id="pila-texto" class="pila-texto">Sesión pareja</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <div id="resultado-screen" class="screen-overlay" style="display: none">
+      <div class="screen-content">
+        <h2 id="resultado-titulo">¡GANASTE!</h2>
+        <p id="resultado-detalle"></p>
+        <p id="resultado-mt" class="detalle-mt"></p>
+        <div class="screen-buttons">
+          <button id="otra-btn" class="screen-button restart-button">Otra mano <kbd>c</kbd></button>
+          <button id="terminar-btn" class="screen-button quit-button">Terminar <kbd>t</kbd></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="fin-screen" class="screen-overlay" style="display: none">
+      <div class="screen-content fin">
+        <h2>¡GRACIAS POR JUGAR!</h2>
+        <div class="estadisticas">
+          <div><b id="fin-manos">0</b><span>Manos</span></div>
+          <div class="g"><b id="fin-ganadas">0</b><span>Ganadas</span></div>
+          <div class="p"><b id="fin-perdidas">0</b><span>Perdidas</span></div>
+          <div><b id="fin-empates">0</b><span>Empates</span></div>
+        </div>
+        <p class="etiqueta">Cadena de eventos de la sesión</p>
+        <code id="fin-cadena" class="fin-cadena"></code>
+        <p id="fin-flujo" class="veredicto"></p>
+        <p id="fin-pila" class="veredicto"></p>
+        <div class="screen-buttons">
+          <button id="nuevo-btn" class="screen-button restart-button">Jugar de nuevo</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="automatas.js"></script>
+    <script src="maquinas.js"></script>
+    <script src="Mano.js"></script>
+    <script src="logica.js"></script>
+  </body>
+</html>

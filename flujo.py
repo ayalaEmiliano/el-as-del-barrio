@@ -12,4 +12,4 @@ TRANSICIONES = {
 AFD_FLUJO = DFA(q=set(TRANSICIONES), sigma=set('rpsxhnvdect'), delta=TRANSICIONES,
                 initial_state='q0', f={'q7'})
 
-# TODO: función de traducción que genere estos eventos a partir de las manos
+# Los eventos los genera partida.py a partir de las manos (salida del Moore y resultado de la MT)

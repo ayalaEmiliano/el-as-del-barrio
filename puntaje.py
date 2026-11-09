@@ -22,15 +22,26 @@ AFND = NFA(q={f'p{i}' for i in range(22)}, sigma=set(SIGMA_E), delta=delta,
            initial_state='p0', f={'p21'})
 AFD = AFND.get_dfa()            # construcción de subconjuntos (automathon no agrega el estado vacío)
 
+X = 'X'                         # estado vacío: mano pasada (sumidero)
+AFD.q.add(X)
+for estado in AFD.q:
+    fila = AFD.delta.setdefault(estado, {})
+    for c in SIGMA_E:
+        fila.setdefault(c, X)   # si la carta pasa todas las interpretaciones, va a X
+
 
 def nombre(estado):
     """"['p1', 'p11']" -> B11 (mano blanda), "['p16']" -> D16 (dura)"""
+    if estado == X:
+        return 'X'
     valores = sorted(int(p[1:]) for p in ast.literal_eval(estado))
     return ('B' if len(valores) == 2 else 'D') + str(valores[-1])
 
 
 def g(estado):
-    """Salida de Moore: S segura, R riesgosa, A alta, V veintiuno (P pasada se maneja aparte)"""
+    """Salida de Moore: S segura, R riesgosa, A alta, V veintiuno, P pasada"""
+    if estado == X:
+        return 'P'
     valores = [int(p[1:]) for p in ast.literal_eval(estado)]
     v = max(valores)
     if v == 21:
@@ -39,4 +50,9 @@ def g(estado):
         return 'A'
     return 'S' if len(valores) == 2 or v <= 11 else 'R'
 
-# TODO: agregar el estado X (mano pasada) para completar el AFD -> 33 estados
+
+def valor(estado):
+    """Mejor valor de la mano (el mayor que no pasa 21). X no tiene valor: devuelve 22"""
+    if estado == X:
+        return 22
+    return max(int(p[1:]) for p in ast.literal_eval(estado))
